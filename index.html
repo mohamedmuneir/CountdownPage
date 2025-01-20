@@ -81,7 +81,10 @@
       text-decoration: underline;
     }
 
-    .fullscreen-btn, .show-settings-btn {
+    .fullscreen-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
       background-color: #00c6ff;
       color: white;
       border: none;
@@ -91,17 +94,8 @@
       border-radius: 5px;
     }
 
-    .fullscreen-btn:hover, .show-settings-btn:hover {
+    .fullscreen-btn:hover {
       background-color: #0088cc;
-    }
-
-    /* Flexbox for button alignment */
-    .header-buttons {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      gap: 10px;
     }
 
     .design-credit {
@@ -139,7 +133,7 @@
         font-size: 0.9rem;
       }
 
-      .fullscreen-btn, .show-settings-btn {
+      .fullscreen-btn {
         font-size: 1.2rem;
         padding: 8px;
       }
@@ -148,79 +142,11 @@
         font-size: 0.8rem;
       }
     }
-
-    /* Settings Form */
-    .settings-container {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 15px;
-      border-radius: 8px;
-      color: #ffffff;
-      display: none; /* Initially hidden */
-    }
-
-    .settings-container input {
-      padding: 5px;
-      margin: 5px;
-      font-size: 1rem;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-    }
-
-    .settings-container button {
-      padding: 5px 10px;
-      background-color: #00c6ff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .settings-container button:hover {
-      background-color: #0088cc;
-    }
-
-    /* Close Button */
-    .close-btn {
-      background-color: #ff6666;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-
-    .close-btn:hover {
-      background-color: #ff4444;
-    }
   </style>
 </head>
 <body>
-  <!-- Header Buttons (Fullscreen + Edit Settings) -->
-  <div class="header-buttons">
-    <!-- Fullscreen Button -->
-    <button class="fullscreen-btn" id="fullscreen-btn">???</button>
-    <!-- Show Settings Button (Styled like Fullscreen) -->
-    <button class="show-settings-btn" id="show-settings-btn">??</button>
-  </div>
-
-  <!-- Settings Form -->
-  <div class="settings-container" id="settings-form">
-    <h2>Set Workday Hours</h2>
-    <label for="start-time">Start Time (HH:MM): </label>
-    <input type="time" id="start-time" value="08:00">
-    <label for="end-time">End Time (HH:MM): </label>
-    <input type="time" id="end-time" value="17:00">
-    <button id="save-settings">Save</button>
-    <!-- Close Button -->
-    <button class="close-btn" id="close-settings">Close</button>
-  </div>
+  <!-- Fullscreen Button -->
+  <button class="fullscreen-btn" id="fullscreen-btn">🖥️</button>
 
   <div class="container">
     <!-- Logo -->
@@ -236,12 +162,12 @@
     <!-- Weather Info -->
     <div class="weather" id="weather"></div>
     <!-- Footer -->
-    <div class="footer">Stay productive! ??</div>
+    <div class="footer">Stay productive! 🚀</div>
   </div>
 
   <!-- End of Day Message -->
   <div id="end-of-day-message" style="display: none; margin-top: 20px;">
-    <h2 style="color: #00c6ff; font-family: 'Pacifico', cursive;">Well done! ??</h2>
+    <h2 style="color: #00c6ff; font-family: 'Pacifico', cursive;">Well done! 🌟</h2>
     <p style="font-family: 'Roboto', sans-serif; color: #f9f9f9;">
       You’ve completed another productive day. Relax and recharge for tomorrow!
     </p>
@@ -263,39 +189,11 @@
     }
     document.getElementById("fullscreen-btn").addEventListener("click", toggleFullScreen);
 
-    // Load settings from localStorage
-    function loadSettings() {
-      const startTime = localStorage.getItem('startTime') || '08:00';
-      const endTime = localStorage.getItem('endTime') || '17:00';
-      document.getElementById('start-time').value = startTime;
-      document.getElementById('end-time').value = endTime;
-    }
-
-    // Save settings to localStorage
-    document.getElementById('save-settings').addEventListener('click', function() {
-      const startTime = document.getElementById('start-time').value;
-      const endTime = document.getElementById('end-time').value;
-      localStorage.setItem('startTime', startTime);
-      localStorage.setItem('endTime', endTime);
-      alert('Settings saved!');
-    });
-
-    // Show/Hide settings form
-    document.getElementById('show-settings-btn').addEventListener('click', function() {
-      const settingsForm = document.getElementById('settings-form');
-      settingsForm.style.display = settingsForm.style.display === 'none' ? 'block' : 'none';
-    });
-
-    // Close settings form
-    document.getElementById('close-settings').addEventListener('click', function() {
-      document.getElementById('settings-form').style.display = 'none';
-    });
-
     // Countdown Function
     function updateCountdown() {
       const now = new Date();
-      const startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...localStorage.getItem('startTime').split(':'));
-      const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), ...localStorage.getItem('endTime').split(':'));
+      const startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0);
+      const endTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 17, 0, 0);
 
       let remainingTime = null;
       let message = "";
@@ -308,7 +206,7 @@
         message = "Time remaining in the workday:";
       } else {
         document.getElementById("countdown").innerText = "00:00:00";
-        document.getElementById("message").innerText = "Workday is over! Great job today! ??";
+        document.getElementById("message").innerText = "Workday is over! Great job today! 🎉";
         document.getElementById("end-of-day-message").style.display = "block";
         return;
       }
@@ -320,7 +218,7 @@
       const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
       document.getElementById("countdown").innerText = 
-        `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')};
       document.getElementById("message").innerText = message;
     }
     setInterval(updateCountdown, 1000);
@@ -329,19 +227,16 @@
     // Weather Function
     async function fetchWeather() {
       try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Al Wakrah&units=metric&appid=201f409d2c13e2adda1af82e40088434`);
+        const response = await fetch(https://api.openweathermap.org/data/2.5/weather?q=Al Wakrah&units=metric&appid=201f409d2c13e2adda1af82e40088434);
         const data = await response.json();
         const { temp } = data.main;
         const description = data.weather[0].description;
-        document.getElementById("weather").innerText = `Current Weather: ${temp}°C, ${description}`;
+        document.getElementById("weather").innerText = Current Weather: ${temp}°C, ${description};
       } catch (error) {
         document.getElementById("weather").innerText = "Unable to fetch weather data.";
       }
     }
     fetchWeather();
-
-    // Load saved settings on page load
-    window.onload = loadSettings;
   </script>
 </body>
 </html>
