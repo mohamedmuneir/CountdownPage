@@ -31,7 +31,7 @@
     }
 
     .logo-container img {
-      max-width: 130px; /* Logo size */
+      max-width: 150px; /* Logo size */
       height: auto;
       margin-bottom: 20px;
     }
@@ -47,7 +47,7 @@
       font-family: 'Orbitron', sans-serif; /* Countdown font */
       font-size: 10rem;
       font-weight: bold;
-      color: #b50505;
+      color: #00c6ff;
       margin: 20px 0;
     }
 
@@ -74,9 +74,30 @@
     .footer a:hover {
       text-decoration: underline;
     }
+
+    /* Full-screen button style */
+    .fullscreen-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #00c6ff;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .fullscreen-btn:hover {
+      background-color: #0088cc;
+    }
   </style>
 </head>
 <body>
+  <!-- Fullscreen Button -->
+  <button class="fullscreen-btn" id="fullscreen-btn">🖥️</button>
+
   <div class="container">
     <!-- Logo -->
     <div class="logo-container">
@@ -93,6 +114,38 @@
   </div>
 
   <script>
+    // Function to toggle full-screen mode
+    function toggleFullScreen() {
+      if (!document.fullscreenElement &&    // Check if we're not in fullscreen
+          !document.webkitFullscreenElement && 
+          !document.mozFullScreenElement && 
+          !document.msFullscreenElement) {  // Check for different browsers
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+          document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari, Opera
+          document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+          document.documentElement.msRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+          document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari, Opera
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+          document.msExitFullscreen();
+        }
+      }
+    }
+
+    // Attach event listener to the button
+    document.getElementById("fullscreen-btn").addEventListener("click", toggleFullScreen);
+
+    // Countdown Function
     function updateCountdown() {
       const now = new Date();
       const startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0);
